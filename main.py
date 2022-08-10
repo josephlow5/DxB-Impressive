@@ -13,6 +13,7 @@ from lib import vc_dynamic
 from lib import vc_moderation
 from lib import chatbot
 from lib import s_command
+import asyncio
 
 #1. Read and Load Configs.
 with open("data/config.json", encoding="utf-8") as configFile:
@@ -45,6 +46,8 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if data.is_monitor_chat_channel(message.channel.id):
+        async with ctx.typing():
+            await asyncio.sleep(2)
         await chatbot.input_chat(message,client)                 #3.1 Chatbot.
     
 @client.event
